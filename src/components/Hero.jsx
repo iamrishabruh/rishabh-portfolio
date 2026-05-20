@@ -25,14 +25,13 @@ export default function Hero() {
       </p>
       <div className="hero__body">
         <div className="hero__highlights section-animate" style={{ animationDelay: '0.1s' }}>
-          <span>Georgia Tech MSCS (4.0 GPA)</span>
-          <span>Full-time @ Care Access · AI & automation</span>
-          <span>Healthcare ML + Platforms</span>
-          <span>CBA Lab Research</span>
+          <span>Georgia Tech CS Masters Student</span>
+          <span>AI Solutions @ Care Access</span>
+          <span>CBA Lab Researcher</span>
         </div>
         <div className="hero__inner section-animate" style={{ animationDelay: '0.15s' }}>
           <p className="hero__bio">
-            I'm a master's student in Computer Science at Georgia Tech and CEO of Reachmind. I work full time at Care Access building automation systems and data pipelines. I build software that matters — from AI and automation to healthcare tools and full-stack products.
+            I want to research, design, and build software that reaches humans everywhere — from AI and automation to healthcare tools and full-stack products.
           </p>
           <div className="hero__contact">
             <a href="mailto:rchouhan.network@gmail.com">rchouhan.network@gmail.com</a>
