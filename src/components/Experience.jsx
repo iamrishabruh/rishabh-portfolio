@@ -16,7 +16,7 @@ const ENTRIES = [
     ],
   },
   {
-    role: 'Founding Software Engineer',
+    role: 'Founding Software Engineer (1099)',
     company: 'Skincentric',
     note: null,
     duration: 'Dec 2024 – Mar 2025, Remote',
