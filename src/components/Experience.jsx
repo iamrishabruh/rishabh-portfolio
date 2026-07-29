@@ -1,9 +1,9 @@
 const ENTRIES = [
   {
-    role: 'AI Driven Marketing Operations Analyst',
+    role: 'AI Solutions Architect',
     company: 'Care Access',
-    note: null,
-    duration: 'Jul 2025 – Present, Remote',
+    duration: 'Jul 2025 – Present',
+    summary: 'End-to-end automation and data systems across the org.',
     bullets: [
       'End-to-end automation systems integrating Monday.com, Slack, Google Workspace, Microsoft Graph, Databricks, Microsoft Fabric',
       'Replaced manual processes with auditable automation pipelines (logging/diagnostics/state tracking)',
@@ -16,168 +16,141 @@ const ENTRIES = [
     ],
   },
   {
-    role: 'Founding Software Engineer (1099)',
+    role: 'Chief Engineering Officer',
+    company: 'Kept',
+    duration: 'Current',
+    summary: 'Leading engineering.',
+    bullets: [],
+  },
+  {
+    role: 'Founding Software Engineer',
     company: 'Skincentric',
-    note: null,
-    duration: 'Dec 2024 – Mar 2025, Remote',
+    duration: 'Dec 2024 – Mar 2025',
+    summary: 'Rebuilt a Flutter skincare app at startup pace.',
     bullets: [
       'Refactored Flutter skincare app to Dart; improved maintainability/scalability',
       'Component rewrites to reduce technical debt + standardize architecture',
       'Automated testing + QA workflows to reduce regressions',
-      'Debugging + documentation in startup pace',
     ],
   },
   {
     role: 'Mobile Software Engineering Intern',
     company: 'Kaiser Permanente',
-    note: null,
-    duration: 'Jun 2023 – Sep 2023, Buckhead, GA',
+    duration: 'Jun 2023 – Sep 2023',
+    summary: 'Swift/SwiftUI drug-interaction proof of concept.',
     bullets: [
       'Swift/SwiftUI drug interaction POC integrating external clinical APIs',
       'Modular architecture (UI/networking/data separation)',
       'XCTest unit/UI tests',
-      'Collaboration on debugging/refactoring/maintainability',
     ],
   },
-]
-
-const OTHER_JOBS = [
-  { role: 'Barista', company: 'Starbucks' },
-  { role: 'Grill cook', company: "Freddy's" },
-  { role: 'Server + delivery', company: 'Mangia' },
-  { role: 'Deli manager', company: 'Walmart' },
-  { role: 'Tutor', company: 'Kumon' },
 ]
 
 export default function Experience() {
   return (
     <section id="experience" className="section">
-      <h2 className="section-title section-animate" style={{ animationDelay: '0.1s' }}>Experience</h2>
-      <div className="timeline">
+      <h2 className="section-title section-animate" style={{ animationDelay: '0.1s' }}>Work</h2>
+      <div className="xp">
         {ENTRIES.map((entry, i) => (
-          <article key={i} className="timeline__entry section-animate" style={{ animationDelay: `${0.15 + i * 0.05}s` }}>
-            <div className="timeline__line" />
-            <div className="timeline__content">
-              <div className="timeline__header">
-                <div>
-                  <h3 className="timeline__role">{entry.role}</h3>
-                  {(entry.company || entry.note) && (
-                    <p className="timeline__meta">
-                      {entry.company}
-                      {entry.company && entry.note && ' · '}
-                      {entry.note && `(${entry.note})`}
-                    </p>
-                  )}
-                </div>
-                {(entry.duration) && (
-                  <span className="timeline__date">{entry.duration}</span>
-                )}
+          <article key={entry.company} className="xp__entry section-animate" style={{ animationDelay: `${0.15 + i * 0.05}s` }}>
+            <div className="xp__header">
+              <div>
+                <h3 className="xp__role">{entry.role}</h3>
+                <p className="xp__company">{entry.company}</p>
               </div>
-              <ul className="timeline__bullets">
-                {entry.bullets.map((b, j) => (
-                  <li key={j}>{b}</li>
-                ))}
-              </ul>
+              <span className="xp__date">{entry.duration}</span>
             </div>
+            <p className="xp__summary">{entry.summary}</p>
+            {entry.bullets.length > 0 && (
+              <details className="xp__details">
+                <summary>More</summary>
+                <ul className="xp__bullets">
+                  {entry.bullets.map((b, j) => (
+                    <li key={j}>{b}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </article>
         ))}
       </div>
-      <div className="other-experience section-animate" style={{ animationDelay: '0.5s' }}>
-        <h3 className="other-experience__title">Other experience</h3>
-        <ul className="other-experience__list">
-          {OTHER_JOBS.map((job, i) => (
-            <li key={i}><span className="other-experience__role">{job.role}</span>, {job.company}</li>
-          ))}
-        </ul>
-      </div>
+      <p className="xp__other section-animate" style={{ animationDelay: '0.4s' }}>
+        Before all that: barista, grill cook, server, deli manager, tutor.
+      </p>
       <style>{`
-        .timeline { position: relative; }
-        .timeline__entry {
-          position: relative;
-          padding-left: 1.5rem;
-          margin-bottom: 2rem;
+        .xp__entry {
+          padding: 1.25rem 0;
+          border-bottom: 1px solid var(--line);
         }
-        .timeline__entry:last-child { margin-bottom: 0; }
-        .timeline__line {
-          position: absolute;
-          left: 0;
-          top: 0.25rem;
-          bottom: -2rem;
-          width: 1px;
-          background: var(--line);
-        }
-        .timeline__entry:last-child .timeline__line { bottom: 0; height: 1.5rem; }
-        .timeline__content { padding-bottom: 0.25rem; }
-        .timeline__header {
+        .xp__entry:first-child { padding-top: 0; }
+        .xp__entry:last-child { border-bottom: none; }
+        .xp__header {
           display: flex;
           justify-content: space-between;
-          align-items: flex-start;
+          align-items: baseline;
           gap: 1rem;
-          margin-bottom: 0.5rem;
         }
-        .timeline__role {
+        .xp__role {
           font-family: var(--font-display);
-          font-size: 1.25rem;
+          font-size: 1.125rem;
           font-weight: 600;
           color: var(--text);
         }
-        .timeline__meta {
+        .xp__company {
           font-size: 0.875rem;
-          color: var(--text-muted);
-          margin-top: 0.15rem;
+          color: var(--accent);
+          margin-top: 0.1rem;
         }
-        .timeline__date {
+        .xp__date {
           font-family: var(--font-mono);
           font-size: 0.75rem;
           color: var(--text-muted);
           white-space: nowrap;
         }
-        .timeline__bullets {
-          list-style: none;
+        .xp__summary {
           font-size: 0.9375rem;
+          color: var(--text-muted);
+          margin-top: 0.5rem;
+          max-width: 55ch;
+        }
+        .xp__details { margin-top: 0.5rem; }
+        .xp__details summary {
+          font-family: var(--font-mono);
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          cursor: pointer;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          user-select: none;
+        }
+        .xp__details summary:hover { color: var(--accent); }
+        .xp__bullets {
+          list-style: none;
+          font-size: 0.875rem;
           line-height: 1.6;
           color: var(--text);
+          margin-top: 0.6rem;
         }
-        .timeline__bullets li {
+        .xp__bullets li {
           position: relative;
           padding-left: 1rem;
           margin-bottom: 0.35rem;
         }
-        .timeline__bullets li::before {
+        .xp__bullets li::before {
           content: '—';
           position: absolute;
           left: 0;
-          color: var(--line);
-        }
-        .other-experience { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-        .other-experience__title {
-          font-family: var(--font-mono);
-          font-size: 0.8125rem;
           color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          margin-bottom: 0.75rem;
         }
-        .other-experience__list {
-          list-style: none;
-          font-size: 0.9375rem;
+        .xp__other {
+          margin-top: 1.5rem;
+          font-size: 0.875rem;
           color: var(--text-muted);
-          line-height: 1.8;
+          font-style: italic;
         }
-        .other-experience__role { color: var(--text); font-weight: 500; }
         @media (max-width: 768px) {
-          .timeline__entry {
-            padding-left: 1.25rem;
-            margin-bottom: 1.75rem;
-          }
-          .timeline__header { flex-wrap: wrap; gap: 0.35rem; }
-          .timeline__date { white-space: normal; }
-          .timeline__role { font-size: 1.125rem; }
-          .timeline__bullets li { margin-bottom: 0.5rem; }
-          .other-experience { margin-top: 2rem; padding-top: 1.25rem; }
-        }
-        @media (max-width: 480px) {
-          .timeline__entry { padding-left: 1rem; margin-bottom: 1.5rem; }
+          .xp__header { flex-wrap: wrap; gap: 0.25rem 0.75rem; }
+          .xp__date { white-space: normal; }
         }
       `}</style>
     </section>

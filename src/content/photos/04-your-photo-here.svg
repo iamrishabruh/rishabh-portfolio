@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#42301b"/>
+      <stop offset="1" stop-color="#140e08"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g4)"/>
+  <circle cx="200" cy="160" r="2.4" fill="#ffeedb" opacity="0.8"/>
+  <circle cx="560" cy="280" r="1.5" fill="#ffeedb" opacity="0.5"/>
+  <circle cx="140" cy="520" r="1.8" fill="#ffeedb" opacity="0.6"/>
+  <circle cx="700" cy="540" r="2.1" fill="#ffeedb" opacity="0.7"/>
+  <circle cx="380" cy="720" r="1.6" fill="#ffeedb" opacity="0.6"/>
+  <circle cx="600" cy="880" r="2.2" fill="#ffeedb" opacity="0.7"/>
+  <text x="400" y="510" fill="#8b93a7" font-family="system-ui, sans-serif" font-size="34" text-anchor="middle">your photo here</text>
+</svg>

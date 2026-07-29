@@ -2,16 +2,19 @@ export default function Research() {
   return (
     <section id="research" className="section">
       <h2 className="section-title section-animate" style={{ animationDelay: '0.1s' }}>Research</h2>
-      <div className="research__content section-animate" style={{ animationDelay: '0.2s' }}>
-        <p>
-          <strong>CBA Lab (Georgia Tech)</strong> — advised by Thomas Plötz. Focus areas include health technologies, AI/ML, and human-centered computing.
-        </p>
-      </div>
+      <p className="research__text section-animate" style={{ animationDelay: '0.15s' }}>
+        <strong>CBA Lab, Georgia Tech</strong> — advised by Dr. Thomas Plötz.
+        Exploring the benefits of state-aware processing in artificial pancreas loops.
+      </p>
       <style>{`
-        .research__content p {
+        .research__text {
           font-size: 1rem;
           line-height: 1.7;
           color: var(--text);
+          max-width: 60ch;
+        }
+        .research__text strong {
+          font-weight: 600;
         }
       `}</style>
     </section>
