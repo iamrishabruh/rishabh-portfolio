@@ -1,243 +1,193 @@
+import { useEffect, useRef, useState } from 'react'
+
+// Drop a portrait at src/content/portrait.jpg (or .png/.webp) and it appears here.
+const portraitModules = import.meta.glob('../content/portrait.{jpg,jpeg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+const PORTRAIT = Object.values(portraitModules)[0] || null
+
+const ROLES = [
+  'AI Solutions Architect at Care Access',
+  'M.S. Computer Science at Georgia Tech',
+  'Chief Engineering Officer at Kept',
+  'CBA Lab researcher — state-aware artificial pancreas loops',
+]
+
+const ROTATE_MS = 3400
+const FADE_MS = 400
+
 export default function Hero() {
+  const [index, setIndex] = useState(0)
+  const [visible, setVisible] = useState(true)
+  const [reduced, setReduced] = useState(false)
+  const fadeTimeout = useRef(null)
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setReduced(prefersReduced)
+    if (prefersReduced) return undefined
+    const interval = setInterval(() => {
+      setVisible(false)
+      fadeTimeout.current = setTimeout(() => {
+        setIndex((i) => (i + 1) % ROLES.length)
+        setVisible(true)
+      }, FADE_MS)
+    }, ROTATE_MS)
+    return () => {
+      clearInterval(interval)
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current)
+    }
+  }, [])
+
   return (
-    <section id="hero" className="hero" aria-label="Introduction">
-      <div className="hero__cosmic">
-        <img
-          className="hero__cosmic-img"
-          src="/images/cosmic-cliffs-2k.png"
-          srcSet="/images/cosmic-cliffs-1200.png 1200w, /images/cosmic-cliffs-2k.png 2000w"
-          sizes="100vw"
-          width={2000}
-          height={1158}
-          alt="Cosmic Cliffs in the Carina Nebula — infrared view from JWST NIRCam"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <div className="hero__cosmic-gradient" aria-hidden="true" />
-        <div className="hero__cosmic-overlay" aria-hidden="true" />
-        <div className="hero__cosmic-inner">
-          <img
-            className="hero__avatar"
-            src="/images/headshot-640.jpg"
-            srcSet="/images/headshot-320.jpg 320w, /images/headshot-640.jpg 640w"
-            sizes="(max-width: 768px) 88px, 116px"
-            width={640}
-            height={640}
-            alt="Rishabh Chouhan"
-            fetchPriority="high"
-            decoding="async"
-          />
-          <div className="hero__cosmic-text">
-            <h1 className="hero__name">Rishabh Chouhan</h1>
-            <p className="hero__title">Software Engineer · Builder · Entrepreneur</p>
-          </div>
-        </div>
+    <section id="top" className="hero" aria-label="Introduction">
+      <div className="hero__glow" aria-hidden="true" />
+      <div className="hero__portrait section-animate">
+        {PORTRAIT ? (
+          <img src={PORTRAIT} alt="Rishabh Chouhan" width={132} height={132} />
+        ) : (
+          <span className="hero__initials" aria-hidden="true">RC</span>
+        )}
       </div>
-      <p className="hero__credit section-animate" style={{ animationDelay: '0.05s' }}>
-        NASA / JWST — Cosmic Cliffs, Carina Nebula
+      <h1 className="hero__name section-animate" style={{ animationDelay: '0.05s' }}>
+        Rishabh Chouhan
+      </h1>
+      {reduced ? (
+        <ul className="hero__roles-static section-animate" style={{ animationDelay: '0.1s' }}>
+          {ROLES.map((role) => (
+            <li key={role}>{role}</li>
+          ))}
+        </ul>
+      ) : (
+        <p
+          className={`hero__role ${visible ? 'hero__role--in' : 'hero__role--out'} section-animate`}
+          style={{ animationDelay: '0.1s' }}
+          aria-live="polite"
+        >
+          {ROLES[index]}
+        </p>
+      )}
+      <p className="hero__family section-animate" style={{ animationDelay: '0.15s' }}>
+        Also a son, a brother, and a friend to many.
       </p>
-      <div className="hero__body">
-        <div className="hero__highlights section-animate" style={{ animationDelay: '0.1s' }}>
-          <span>Georgia Tech CS Masters Student</span>
-          <span>AI Solutions @ Care Access</span>
-          <span>CBA Lab Researcher</span>
-        </div>
-        <div className="hero__inner section-animate" style={{ animationDelay: '0.15s' }}>
-          <p className="hero__bio">
-            I want to research, design, and build software that reaches humans everywhere — from AI and automation to healthcare tools and full-stack products.
-          </p>
-          <div className="hero__contact">
-            <a href="mailto:rchouhan.network@gmail.com">rchouhan.network@gmail.com</a>
-            <span className="hero__dot">·</span>
-            <a href="https://github.com/iamrishabruh" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <span className="hero__dot">·</span>
-            <a href="https://www.linkedin.com/in/chouhan-rishabh/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <span className="hero__dot">·</span>
-            <a href="https://reachmindllc.com" target="_blank" rel="noopener noreferrer">Reachmind</a>
-            <span className="hero__dot">·</span>
-            <a href="#resume">Resume</a>
-          </div>
-          <div className="hero__scroll" aria-hidden="true">
-            <span className="hero__scroll-line" />
-          </div>
-        </div>
+      <div className="hero__links section-animate" style={{ animationDelay: '0.2s' }}>
+        <a href="https://github.com/iamrishabruh" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/chouhan-rishabh/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="/documents/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="mailto:rchouhan.network@gmail.com">Email</a>
       </div>
       <style>{`
         .hero {
-          border-bottom: 1px solid var(--line);
-        }
-        .hero__cosmic {
           position: relative;
-          left: 50%;
-          right: 50%;
-          margin-left: -50vw;
-          margin-right: -50vw;
-          width: 100vw;
-          min-height: min(52vh, 520px);
-          overflow: hidden;
+          min-height: calc(88vh - var(--nav-height));
           display: flex;
-          align-items: flex-end;
-          padding: 2.5rem 1.5rem 3.5rem;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 4rem 0 3rem;
+          border-bottom: 1px solid var(--line);
+          scroll-margin-top: var(--nav-height);
         }
-        .hero__cosmic-img {
+        .hero__glow {
           position: absolute;
-          inset: 0;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: min(640px, 90vw);
+          height: min(640px, 90vw);
+          background: radial-gradient(circle, rgba(157, 184, 255, 0.08) 0%, transparent 65%);
+          pointer-events: none;
+        }
+        .hero__portrait {
+          width: 132px;
+          height: 132px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin-bottom: 1.75rem;
+          border: 1px solid var(--line);
+          box-shadow: 0 0 48px rgba(157, 184, 255, 0.18);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--bg-card);
+        }
+        .hero__portrait img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center 42%;
-          transform: translateZ(0);
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          image-rendering: auto;
         }
-        .hero__cosmic-gradient {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(10, 12, 20, 0.2) 0%,
-            rgba(26, 23, 20, 0.55) 45%,
-            var(--bg) 100%
-          );
-          pointer-events: none;
-        }
-        .hero__cosmic-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.12) 0%,
-            rgba(0, 0, 0, 0.28) 100%
-          );
-          pointer-events: none;
-        }
-        .hero__cosmic-inner {
-          position: relative;
-          z-index: 1;
-          max-width: 720px;
-          margin: 0 auto;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          gap: 1.25rem;
-        }
-        .hero__avatar {
-          width: 116px;
-          height: 116px;
-          flex-shrink: 0;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid rgba(245, 240, 232, 0.55);
-          box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
-        }
-        .hero__cosmic-text {
-          min-width: 0;
+        .hero__initials {
+          font-family: var(--font-display);
+          font-size: 2.25rem;
+          font-weight: 600;
+          color: var(--text-muted);
+          letter-spacing: 0.05em;
         }
         .hero__name {
           font-family: var(--font-display);
-          font-size: clamp(2rem, 6vw, 3rem);
-          font-weight: 600;
-          color: #f5f0e8;
-          letter-spacing: 0.02em;
-          margin-bottom: 0.5rem;
-          text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
-        }
-        .hero__title {
-          font-family: var(--font-mono);
-          font-size: clamp(0.8125rem, 2.5vw, 0.875rem);
-          color: rgba(245, 240, 232, 0.88);
-          margin: 0;
-          text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
-        }
-        .hero__credit {
-          font-family: var(--font-mono);
-          font-size: 0.65rem;
-          color: var(--text-muted);
-          text-align: center;
-          margin: 0;
-          padding: 0.5rem 1rem 0;
-          letter-spacing: 0.02em;
-        }
-        .hero__body {
-          padding-top: 1.75rem;
-          padding-bottom: 3rem;
-        }
-        .hero__highlights {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem 1rem;
-          margin-bottom: 1.5rem;
-          font-family: var(--font-mono);
-          font-size: 0.75rem;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-        }
-        .hero__bio {
-          font-size: 1.125rem;
-          max-width: 36em;
-          margin-bottom: 1.5rem;
+          font-size: clamp(2.25rem, 7vw, 3.5rem);
+          font-weight: 700;
+          letter-spacing: 0.01em;
           color: var(--text);
+          margin-bottom: 0.9rem;
         }
-        .hero__contact {
+        .hero__role {
+          font-family: var(--font-mono);
+          font-size: clamp(0.8125rem, 2.5vw, 0.9375rem);
+          color: var(--accent);
+          min-height: 2.6em;
+          max-width: 34em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity ${FADE_MS}ms ease;
+        }
+        .hero__role--in { opacity: 1; }
+        .hero__role--out { opacity: 0; }
+        .hero__roles-static {
+          list-style: none;
           font-family: var(--font-mono);
           font-size: 0.875rem;
-          color: var(--text-muted);
-        }
-        .hero__contact a {
           color: var(--accent);
-          transition: color 0.2s ease;
+          line-height: 2;
         }
-        .hero__contact a:hover {
-          color: var(--hover);
+        .hero__family {
+          font-size: 0.9375rem;
+          color: var(--text-muted);
+          margin-top: 0.75rem;
         }
-        .hero__dot {
-          margin: 0 0.5rem;
-          color: var(--line);
-        }
-        .hero__scroll {
-          margin-top: 3rem;
+        .hero__links {
           display: flex;
+          flex-wrap: wrap;
           justify-content: center;
+          gap: 0.75rem;
+          margin-top: 2.25rem;
         }
-        .hero__scroll-line {
-          width: 1px;
-          height: 40px;
-          background: linear-gradient(to bottom, var(--line), transparent);
-          border-radius: 1px;
+        .hero__links a {
+          font-size: 0.875rem;
+          padding: 0.55rem 1.15rem;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--text);
+          background: var(--bg-card);
+          transition: all 0.2s ease;
+        }
+        .hero__links a:hover {
+          border-color: var(--accent);
+          color: var(--accent);
         }
         @media (max-width: 768px) {
-          .hero__cosmic {
-            min-height: min(44vh, 380px);
-            padding: 2rem 1rem 2.75rem;
-          }
-          .hero__cosmic-img { object-position: center 38%; }
-          .hero__cosmic-inner { gap: 1rem; }
-          .hero__avatar { width: 88px; height: 88px; }
-          .hero__body { padding-top: 1.25rem; padding-bottom: 2.5rem; }
-          .hero__highlights { gap: 0.4rem 0.75rem; margin-bottom: 1.25rem; font-size: 0.7rem; }
-          .hero__bio { font-size: 1rem; margin-bottom: 1.25rem; }
-          .hero__contact {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.25rem 0;
-          }
-          .hero__contact a {
-            padding: 0.5rem 0.25rem 0.5rem 0;
-            margin-right: 0.25rem;
+          .hero { min-height: calc(80vh - var(--nav-height)); padding: 3rem 0 2.5rem; }
+          .hero__portrait { width: 112px; height: 112px; margin-bottom: 1.5rem; }
+          .hero__links { gap: 0.6rem; }
+          .hero__links a {
             min-height: 44px;
             display: inline-flex;
             align-items: center;
           }
-          .hero__dot { margin: 0 0.35rem; }
-          .hero__scroll { margin-top: 2rem; }
-        }
-        @media (max-width: 480px) {
-          .hero__cosmic { min-height: 38vh; padding-bottom: 2.25rem; }
-          .hero__avatar { width: 72px; height: 72px; }
-          .hero__contact a { padding: 0.5rem 0.5rem 0.5rem 0; }
         }
       `}</style>
     </section>

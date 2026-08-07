@@ -1,34 +1,36 @@
-import SideNav from './components/SideNav'
+import Starfield from './components/Starfield'
+import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
 import Experience from './components/Experience'
-import Projects from './components/Projects'
 import Research from './components/Research'
-import Volunteering from './components/Volunteering'
-import Resume from './components/Resume'
-import Documents from './components/Documents'
+import Projects from './components/Projects'
+import PhotoReel from './components/PhotoReel'
+import MusicReel from './components/MusicReel'
 import Education from './components/Education'
-import Honors from './components/Honors'
+import Recognition from './components/Recognition'
 import Skills from './components/Skills'
-import Contact from './components/Contact'
+import Documents from './components/Documents'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
     <>
-      <SideNav />
+      <Starfield />
+      <Nav />
       <main className="page">
         <Hero />
         <About />
         <Experience />
-        <Projects />
         <Research />
-        <Volunteering />
-        <Resume />
-        <Documents />
+        <Projects />
+        <PhotoReel />
+        <MusicReel />
         <Education />
-        <Honors />
+        <Recognition />
         <Skills />
-        <Contact />
+        <Documents />
+        <Footer />
       </main>
     </>
   )
