@@ -16,8 +16,21 @@ export default function Hero() {
         <div className="hero__cosmic-gradient" aria-hidden="true" />
         <div className="hero__cosmic-overlay" aria-hidden="true" />
         <div className="hero__cosmic-inner">
-          <h1 className="hero__name">Rishabh Chouhan</h1>
-          <p className="hero__title">Software Engineer · Builder · Entrepreneur</p>
+          <img
+            className="hero__avatar"
+            src="/images/headshot-640.jpg"
+            srcSet="/images/headshot-320.jpg 320w, /images/headshot-640.jpg 640w"
+            sizes="(max-width: 768px) 88px, 116px"
+            width={640}
+            height={640}
+            alt="Rishabh Chouhan"
+            fetchPriority="high"
+            decoding="async"
+          />
+          <div className="hero__cosmic-text">
+            <h1 className="hero__name">Rishabh Chouhan</h1>
+            <p className="hero__title">Software Engineer · Builder · Entrepreneur</p>
+          </div>
         </div>
       </div>
       <p className="hero__credit section-animate" style={{ animationDelay: '0.05s' }}>
@@ -105,6 +118,21 @@ export default function Hero() {
           max-width: 720px;
           margin: 0 auto;
           width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+        }
+        .hero__avatar {
+          width: 116px;
+          height: 116px;
+          flex-shrink: 0;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid rgba(245, 240, 232, 0.55);
+          box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+        }
+        .hero__cosmic-text {
+          min-width: 0;
         }
         .hero__name {
           font-family: var(--font-display);
@@ -185,6 +213,8 @@ export default function Hero() {
             padding: 2rem 1rem 2.75rem;
           }
           .hero__cosmic-img { object-position: center 38%; }
+          .hero__cosmic-inner { gap: 1rem; }
+          .hero__avatar { width: 88px; height: 88px; }
           .hero__body { padding-top: 1.25rem; padding-bottom: 2.5rem; }
           .hero__highlights { gap: 0.4rem 0.75rem; margin-bottom: 1.25rem; font-size: 0.7rem; }
           .hero__bio { font-size: 1rem; margin-bottom: 1.25rem; }
@@ -206,6 +236,7 @@ export default function Hero() {
         }
         @media (max-width: 480px) {
           .hero__cosmic { min-height: 38vh; padding-bottom: 2.25rem; }
+          .hero__avatar { width: 72px; height: 72px; }
           .hero__contact a { padding: 0.5rem 0.5rem 0.5rem 0; }
         }
       `}</style>
