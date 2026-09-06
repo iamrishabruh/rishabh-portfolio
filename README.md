@@ -1,78 +1,59 @@
-# My Portfolio Website
+# Rishabh Chouhan — personal portfolio
 
-This project showcases my skills, projects, and experiences as a developer.
+An editorial, static-first portfolio for https://rishabhchouhan.netlify.app/. The homepage introduces the person; dedicated pages preserve the depth of the original site.
 
-## Table of Contents
+## Run
 
-- [Features](#features)
-- [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+Use Node 22 and Python 3.10 or newer.
 
-## Features
+```sh
+npm ci
+python3 -m pip install -r requirements.txt
+npm run lint
+npm run build
+npm test
+npm run preview
+```
 
-- Personal information and background.
-- Projects showcase demonstrating technical abilities.
-- Contact form for potential employers or collaborators.
-- Responsive design optimized for both desktop and mobile devices.
+Open http://127.0.0.1:4173. `npm run dev` rebuilds and starts the same preview server; after editing source, rebuild and refresh. It is intentionally not a hot-reloading SPA.
 
-## Technologies
+## Edit
 
-This website is built using the following technologies
+- `site/content.mjs`: biography, experience, projects, research, education, honors, leadership, skills, document links, and repository snapshot.
+- `site/pages.mjs`: shared layout and page templates.
+- `site/styles.css`: design tokens, responsive styles, reduced-motion and print behavior.
+- `site/client.js`: mobile menu, copy email, native audio coordination, accessible image dialog, old hash redirects.
+- `site/media-metadata.json`: descriptions and captions keyed by original filename. Add precise visual descriptions before release; fallback labels are tracked for review.
+- `src/content/portrait.jpg`: existing portrait.
+- `src/content/photos/`: all original photos, including uppercase extensions and HEIC variants. The build generates responsive WebP derivatives without EXIF. Originals remain unchanged in Git and are not newly published as raw downloads.
+- `src/content/music/`: original tracks. The build preserves their bytes.
+- `public/documents/`: original PDFs. Their URLs and bytes stay unchanged.
+- `site/baseline.json`: the preservation baseline. Do not edit it just to silence a failed preservation check. When adding content, update the inventory and tests deliberately.
 
-- **JavaScript**: 64.8%
-- **CSS**: 31.1%
-- **HTML**: 4.1%
+There are no browser GitHub API calls, frontend credentials, analytics services, or third-party font requests. The repository shelf is a dated public snapshot with a link to the current GitHub index, not a live or complete feed.
 
-### Libraries and Frameworks
+## Pages
 
-- React
-- React Router
-- CSS Modules
+`/`, `/work/`, `/research/`, `/life/`, `/about/`, `/archive/`, and seven `/work/[slug]/` overviews. Every page is pre-rendered. A real `404.html` handles unknown routes. Old section hashes have static fallback links and small progressive redirects.
 
-## Installation
+## Browser QA
 
-To get a local copy up and running, follow these steps:
+```sh
+python3 -m pip install playwright==1.55.0
+python3 -m playwright install chromium
+npm run test:browser
+```
 
-1. **Clone the repository:**
+The browser suite starts its own preview server and captures actual screenshots at 320, 360, 390, 768, 1024, and 1440 pixels. Set `CHROMIUM_EXECUTABLE` to use an existing Chromium executable. To enable axe-core, install `axe-core@4.10.3` into a separate test-tools directory and set `AXE_SOURCE` to its `axe.min.js`. A missing engine is a reported skip, not a pass.
 
-```git clone https://github.com/username/portfolio.git```
+GitHub Actions builds the real repository assets, runs the tests, and uploads available reports as `portfolio-quality`. A green automated run does not replace visual review, screen-reader testing, or Core Web Vitals field data.
 
-2. Navigate to the project directory:
+## Deployment
 
-```cd portfolio```
+Netlify builds `dist/` using the committed configuration. Keep the production branch on `main`. Do not add an SPA fallback returning 200 for unknown URLs. Preview contexts are marked `noindex`; canonical metadata points to the public site. Merge only after the draft PR's real-asset build, browser checks, and visual/content review are complete.
 
-3. Install the dependencies:
+## Architecture decision
 
-```npm install```
+This redesign deliberately replaces the old client-only React/Vite shell with a native Node static renderer and a small progressive-enhancement module. The benefit is meaningful HTML on every route without a client framework or hydration. Tradeoffs include string templates, rebuild-and-refresh development, and Python media tooling. Review `docs/ARCHITECTURE.md` before merging.
 
-4. Start the development server:
-
-```npm start```
-
-## Usage
-After starting the development server, you can view the website in your browser at http://localhost:3000. 
-
-_npm start should automatically trigger a browser open_
-
-## Contributing
-Contributions are welcome! If you would like to contribute to this project, please follow these steps:
-
-1. Fork the repository
-  a. Create your feature branch
-  ```
-  git checkout -b feature/AmazingFeature
-  ```
-
-  b. Commit your changes
-  ```
-  git commit -m 'Add some AmazingFeature'
-  ```
-
-  c. Push to the branch
-  ```
-  git push origin feature/AmazingFeature
-  ```
-  
-**Finally, open a pull request!**
+See `docs/AUDIT.md`, `docs/CONTENT_INVENTORY.md`, `docs/DESIGN_SYSTEM.md`, and `docs/QA.md` for implementation decisions and verification limits.

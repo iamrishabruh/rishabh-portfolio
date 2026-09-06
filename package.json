@@ -1,19 +1,16 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "rishabh-portfolio",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "description": "Static editorial portfolio with progressive enhancement and preserved originals",
+  "engines": { "node": ">=22 <25" },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.0"
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && npm run preview",
+    "preview": "node scripts/serve.mjs",
+    "lint": "node scripts/check.mjs",
+    "test": "node --test tests/content.test.mjs",
+    "test:browser": "python3 tests/browser.py"
   }
 }
