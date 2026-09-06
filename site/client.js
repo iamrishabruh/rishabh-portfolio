@@ -4,6 +4,7 @@ const legacy = {experience:'/work/#experience',projects:'/work/#projects',music:
 if(location.pathname==='/' && legacy[location.hash.slice(1)]) location.replace(legacy[location.hash.slice(1)]);
 const menu=document.querySelector('.mobile-menu');
 if(menu){
+ menu.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',()=>{menu.open=false;}));
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.open){menu.open=false;menu.querySelector('summary').focus();}});
  document.addEventListener('click',event=>{if(menu.open&&!menu.contains(event.target)) menu.open=false;});
  matchMedia('(min-width: 701px)').addEventListener('change',event=>{if(event.matches) menu.open=false;});

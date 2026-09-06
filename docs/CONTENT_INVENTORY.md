@@ -34,3 +34,7 @@ Root `#top`, `#about`, `#research`, `#life`, and `#contact` still exist. Other o
 ## Review status
 
 Original factual text is mapped from source, not independently credential-verified. Photo descriptions remain generic until visually reviewed. See `QA.md` for the distinction between fixture-based authoring checks and verification against actual repository assets.
+
+## Simplification review baseline
+
+The current redesign is based on merged commit `7122cf0`. All destinations above are retained. `tests/fixtures/merged-content.json` freezes its substantive data and original asset Git blob IDs. Project preview sentences are additive; the original descriptions, focus, status, and repository references remain on their detail pages. No original photo, song, document, or portrait bytes were changed.

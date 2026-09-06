@@ -23,7 +23,7 @@ test('14 real HTML documents with one H1, canonical metadata, and core content',
 test('HTML escaping rejects markup in content fields',()=>assert.equal(escapeHTML('<img src=x onerror="x">'),'&lt;img src=x onerror=&quot;x&quot;&gt;'));
 test('all five projects and four roles remain represented',async()=>{
  const work=await htmlFor('/work/');assert.equal(projects.length,5);assert.equal(experience.length,4);
- for(const p of projects){assert.ok(work.includes(escapeHTML(p.title)));assert.ok(work.includes(escapeHTML(p.description)));await exists(fileFor('/work/'+p.slug+'/'));}
+ for(const p of projects){assert.ok(work.includes(escapeHTML(p.title)));assert.ok(work.includes(escapeHTML(p.preview)));await exists(fileFor('/work/'+p.slug+'/'));}
  for(const job of experience)for(const text of [job.role,job.company,job.duration,job.summary,...job.bullets])assert.ok(work.includes(escapeHTML(text)),text);
 });
 test('education, honors, leadership and all sixteen skills are preserved',async()=>{
@@ -61,4 +61,38 @@ test('asset hashes, social preview, sitemap, CSP, and genuine 404 exist',async()
 test('ordinary builds have no browser API or third-party rendering dependency',async()=>{
  const home=await htmlFor('/');assert.ok(!home.includes('api.github.com'));assert.ok(!home.includes('fonts.googleapis'));assert.ok(!home.includes('VITE_'));
  const pack=JSON.parse(await readFile(resolve(root,'package.json'),'utf8'));assert.equal(Object.keys(pack.dependencies||{}).length,0);
+});
+
+test('substantive facts and original assets match the merged portfolio', async () => {
+ const saved = JSON.parse(await readFile(resolve(root, 'tests/fixtures/merged-content.json'), 'utf8'));
+ const current = await import('../site/content.mjs');
+ function contains(actual, expected, key) {
+  if (Array.isArray(expected)) {
+   assert.equal(actual.length, expected.length, key);
+   expected.forEach((value, i) => contains(actual[i], value, `${key}[${i}]`));
+  } else if (expected && typeof expected === 'object') {
+   for (const [name, value] of Object.entries(expected)) contains(actual[name], value, `${key}.${name}`);
+  } else assert.equal(actual, expected, key);
+ }
+ for (const [key, value] of Object.entries(saved)) {
+  if (!['baseCommit', 'assets'].includes(key)) contains(current[key], value, key);
+ }
+ for (const [path, expected] of Object.entries(saved.assets)) {
+  const bytes = await readFile(resolve(root, path));
+  const actual = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  assert.equal(actual, expected, `Original asset changed: ${path}`);
+ }
+});
+
+test('plain introductions retain technical descriptions, research and repository references', async () => {
+ const saved = JSON.parse(await readFile(resolve(root, 'tests/fixtures/merged-content.json'), 'utf8'));
+ for (const project of saved.projects) {
+  const html = await htmlFor(`/work/${project.slug}/`);
+  for (const key of ['title', 'description', 'focus', 'status', 'repo']) assert.ok(html.includes(escapeHTML(project[key])), `${project.slug}: ${key}`);
+ }
+ const html = await htmlFor('/research/');
+ for (const value of Object.values(saved.research)) assert.ok(html.includes(escapeHTML(value)), value);
+ const work = await htmlFor('/work/');
+ assert.ok(work.includes(escapeHTML(saved.earlierWork)));
+ for (const name of saved.repositorySnapshot.names) assert.ok(work.includes(`${profile.github}/${name}`), name);
 });
