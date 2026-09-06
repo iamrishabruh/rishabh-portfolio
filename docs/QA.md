@@ -1,31 +1,31 @@
-# QA record and release gate
+# Verification — editorial simplification
 
-## Checks executed while authoring
+Verified locally on September 6, 2026 against the real checkout and its original assets, using Node 24.18.1, Python 3.14, Playwright 1.55.0 / Chromium, and axe-core 4.10.3. This record replaces the fixture-only authoring limitations of the earlier redesign; it does not claim those earlier checks were real-asset verification.
 
-Repository source and immutable baseline were read through the connected GitHub tool. The new zero-dependency npm configuration installed successfully. JavaScript syntax and explicit content guards passed.
+## Passed
 
-An initial static build and 11 Node tests passed in an isolated fixture workspace. Audio HTTP range handling also passed there. Subsequent code refinements require a fresh run against the committed tree; do not treat earlier fixture results as certification of this exact commit.
+- JavaScript syntax and content guards (`npm run lint`).
+- Full production build: 14 static HTML pages, 31 photo/format variants, seven songs, 18 PDFs.
+- All 13 content tests, with no skips. These cover every original media blob against merged commit `7122cf0`, factual content, rendered project/research detail, original document/audio output, internal links/fragments, metadata, legacy links, and absence of browser runtime dependencies.
+- All 14 browser tests, with no skips. Coverage includes 13 routes at six widths (320, 360, 390, 768, 1024, 1440px), keyboard/mobile navigation, skip link, homepage and gallery dialog focus restoration, user-initiated audio and visible errors, clipboard success/denial, real 404, no-JavaScript pages/media, reduced motion, audio range requests, section links, expanded responsibilities, 200% text enlargement at 768px, and a 568×320 mobile menu.
+- All 31 gallery image renditions decoded successfully in Chromium.
+- axe scanned 13 routes with WCAG 2 A/AA, 2.1 AA and 2.2 AA tags: zero reported violations. One `color-contrast` result on Life remains incomplete for manual judgment; an incomplete result is not a pass.
+- `git diff --check`.
 
-### Fixture limitation
+A text-enlargement issue in Archive and Care Access was found and fixed with intrinsic-size and word-wrapping rules. The clipboard test used an evaluation path blocked by the existing CSP; it now uses Playwright locator assertions, with no relaxation of production headers.
 
-Container networking could not clone/download the original binary assets. Local fixtures were explicitly synthetic image/audio/document bytes in a separate directory that is **not committed**. Those results establish code paths, link validation, and source-to-output handling, not actual HEIC decoding, portrait crops, genuine MP3 playback, or PDF validity. Fixture assets must never be deployed or presented as finished screenshots.
+## Visual review
 
-### Browser limitation
+Actual screenshots were generated from the production output. The homepage was inspected at desktop and mobile sizes, along with representative Work, Research, Life, About, and Archive views. Before/after first-viewport captures are in `docs/review/`. The full browser run also generates homepage screenshots at all six widths and interior first-view screenshots at 390px and 1440px under `qa-output/`.
 
-Local Chromium navigation to the preview returned `net::ERR_BLOCKED_BY_ADMINISTRATOR`. Eight local browser checks were blocked, not passed. The axe-core scan was skipped because its engine was unavailable. No before/after screenshot, real-device test, Lighthouse score, or field performance number is claimed in this record.
+At 1440×1000, the homepage main region changed from 326 to 224 visible words (about 31% fewer) and from about 4452 to 3433 CSS pixels in height (about 23% shorter). Both measurements use Chromium `main.innerText` and the main element's bounding rectangle with the same viewport; these are content/layout comparisons, not performance scores. Full factual details remain on the inner pages.
 
-## CI included
+## Reproduce
 
-The GitHub Actions workflow builds the actual checkout with HEIF support and runs 11 content/preservation tests. Playwright then checks 13 normal routes at 320, 360, 390, 768, 1024, and 1440 pixels. It covers menu/keyboard/skip-link behavior, dialog focus restoration, audio error states, clipboard success/denial, old hashes, HTTP 404s, no-JavaScript content, reduced motion, and audio range requests. Its pinned axe engine scans relevant WCAG tags and records incomplete/manual-review results as well as violations. Actual screenshots and reports are uploaded when generated.
+Use the README's setup/build/test steps. Install the pinned axe engine separately and set `AXE_SOURCE` so the scan does not skip. To reuse an already running preview, set `PORTFOLIO_TEST_ORIGIN=http://127.0.0.1:4173`; otherwise the browser suite starts and stops its own server. GitHub Actions independently runs the same real-asset build, tests, and screenshot/report upload on the PR.
 
-This file documents the authoring baseline. The PR's current check results are authoritative for execution against the committed tree. No CI success is asserted before observing it.
+## Limits and review notes
 
-## Release gates
+This is Chromium testing, not real-device Safari/iOS or screen-reader testing, complete WCAG certification, or measured real-user performance. The inherited generic photo descriptions still need the owner's captions; no locations, identities, or stories were invented. Existing biographical details, research status, historical repository availability, and the unlinked Databricks certification were preserved rather than independently reverified.
 
-- Real-asset build and browser/axe checks must pass; inspect actual artifacts.
-- Review real portrait/photo crops and replace generic image descriptions in `site/media-metadata.json`.
-- Confirm preserved biography, titles, GPA, research relationship, dates, and external destinations.
-- Check Safari/iOS audio, screen-reader navigation, zoom, and deployment-preview routing.
-- Review a Netlify preview and keep the existing production branch on `main` until approval.
-
-Targets, not measured results: mobile Lighthouse performance 95 or better where achievable; real-user p75 LCP <=2.5 seconds, INP <=200ms, CLS <=0.1. Field INP cannot be established by Lighthouse. No blanket production-readiness or accessibility-conformance claim is made.
+Review the PR preview before authorizing a merge. A successful PR build does not itself authorize a production release.

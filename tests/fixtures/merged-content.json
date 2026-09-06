@@ -1,0 +1,360 @@
+{
+  "baseCommit": "7122cf0",
+  "profile": {
+    "name": "Rishabh Chouhan",
+    "email": "rchouhan.network@gmail.com",
+    "location": "Atlanta, GA",
+    "github": "https://github.com/iamrishabruh",
+    "linkedin": "https://www.linkedin.com/in/chouhan-rishabh/",
+    "reachmind": "https://reachmindllc.com",
+    "personal": "Also a son, a brother, and a friend to many.",
+    "interests": "Singing, songwriting, the gym, football, video games, and traveling."
+  },
+  "experience": [
+    {
+      "slug": "care-access",
+      "role": "AI Solutions Architect",
+      "company": "Care Access",
+      "duration": "Jul 2025 – Present",
+      "summary": "End-to-end automation and data systems across the org.",
+      "bullets": [
+        "End-to-end automation systems integrating Monday.com, Slack, Google Workspace, Microsoft Graph, Databricks, Microsoft Fabric",
+        "Replaced manual processes with auditable automation pipelines (logging/diagnostics/state tracking)",
+        "Dynamic Monday.com workflows (board relations, people columns, form ingestion) for event creation + staffing + study updates",
+        "Slack orchestration (channel creation, invites, formatted summaries, mobile-safe rendering)",
+        "Secure data engineering pipelines (normalized lookup tables, dedup mappings, curated views via Fabric GraphQL APIs)",
+        "Privacy-preserving joins with SHA-256 hashing + secret peppering",
+        "Migration to GitHub-based SDLC (repo structure, env-scoped secrets, versioning, deployment practices)",
+        "Runbooks + cross-functional bridge across ops/security/data/engineering"
+      ]
+    },
+    {
+      "slug": "kept",
+      "role": "Chief Engineering Officer",
+      "company": "Kept",
+      "duration": "Current",
+      "summary": "Leading engineering.",
+      "bullets": []
+    },
+    {
+      "slug": "skincentric",
+      "role": "Founding Software Engineer",
+      "company": "Skincentric",
+      "duration": "Dec 2024 – Mar 2025",
+      "summary": "Rebuilt a Flutter skincare app at startup pace.",
+      "bullets": [
+        "Refactored Flutter skincare app to Dart; improved maintainability/scalability",
+        "Component rewrites to reduce technical debt + standardize architecture",
+        "Automated testing + QA workflows to reduce regressions"
+      ]
+    },
+    {
+      "slug": "kaiser-permanente",
+      "role": "Mobile Software Engineering Intern",
+      "company": "Kaiser Permanente",
+      "duration": "Jun 2023 – Sep 2023",
+      "summary": "Swift/SwiftUI drug-interaction proof of concept.",
+      "bullets": [
+        "Swift/SwiftUI drug interaction POC integrating external clinical APIs",
+        "Modular architecture (UI/networking/data separation)",
+        "XCTest unit/UI tests"
+      ]
+    }
+  ],
+  "earlierWork": "Before all that: barista, grill cook, server, deli manager, tutor.",
+  "projects": [
+    {
+      "slug": "diatrend",
+      "title": "Diatrend",
+      "description": "AI-driven CGM trajectory prediction — PyTorch, TabTransformer/GNN, FastAPI.",
+      "repo": "https://github.com/iamrishabruh/Diatrend-ML",
+      "category": "Healthcare · Machine learning",
+      "focus": "Exploring how glucose trajectories can be modeled from continuous glucose monitoring data.",
+      "status": "Research project; not a clinically validated system."
+    },
+    {
+      "slug": "nexus-lite",
+      "title": "Nexus Lite",
+      "description": "Cross-platform mobile health tracker — React Native Expo + FastAPI.",
+      "repo": "https://github.com/iamrishabruh/Nexus-Lite",
+      "category": "Mobile · Healthcare",
+      "focus": "A cross-platform interface for bringing health-tracking information together.",
+      "status": "Project retained from the original portfolio. The repository link was unavailable during the audit.",
+      "unavailable": true
+    },
+    {
+      "slug": "bennington",
+      "title": "Bennington",
+      "description": "Stock backtesting + ML trading platform — Python, Docker, Cloud Run.",
+      "repo": "https://github.com/iamrishabruh/Bennington",
+      "category": "Data systems · Finance",
+      "focus": "A platform for exploring trading strategies through backtesting and machine learning.",
+      "status": "Experimental software, not investment advice or a claim of trading performance."
+    },
+    {
+      "slug": "differential-learning",
+      "title": "Differential Learning",
+      "description": "Federated learning with differential privacy — DPAdam, gradient clustering.",
+      "repo": "https://github.com/iamrishabruh/Differential-Learning",
+      "category": "Machine learning · Privacy",
+      "focus": "Exploring learning across distributed data while incorporating differential privacy.",
+      "status": "Technical project; no privacy guarantee or measured result is asserted here."
+    },
+    {
+      "slug": "drug-interaction-checker",
+      "title": "Drug Interaction Checker",
+      "description": "Swift/SwiftUI clinical API proof of concept — XCTest, CI.",
+      "repo": "https://github.com/iamrishabruh/Drug-Interaction-Checker",
+      "category": "iOS · Healthcare",
+      "focus": "A SwiftUI proof of concept connecting a mobile interface to clinical APIs.",
+      "status": "Proof of concept, not a clinical decision-making tool."
+    }
+  ],
+  "research": {
+    "title": "State-aware processing in artificial pancreas loops",
+    "affiliation": "CBA Lab, Georgia Tech",
+    "advisor": "Dr. Thomas Plötz",
+    "summary": "Exploring the benefits of state-aware processing in artificial pancreas loops.",
+    "status": "Research exploration",
+    "question": "What changes when a system understands the state behind its observations?"
+  },
+  "education": [
+    {
+      "school": "Georgia Institute of Technology",
+      "degree": "M.S. Computer Science",
+      "note": "2025 – Present · 4.0 GPA"
+    },
+    {
+      "school": "Georgia State University",
+      "degree": "B.S. Computer Science",
+      "note": "2023 – 2025"
+    },
+    {
+      "school": "University of Georgia",
+      "degree": "Undergraduate coursework",
+      "note": "2022 – 2023"
+    }
+  ],
+  "honors": [
+    "President's List — GSU (Spring 2025, Fall 2024)",
+    "Dean's List — GSU (Summer 2024, Spring 2024)",
+    "AP Capstone Diploma · AP Scholar with Distinction",
+    "35/36 ACT",
+    "Recognized by Kaiser Permanente leadership for internship performance",
+    "HOSA State Leadership Conference — 2nd, Medical Terminology (2020)"
+  ],
+  "leadership": [
+    "Mensa — 20s/30s Coordinator, community events",
+    "FBLA (2015 – 2025) — 500+ service hours · 1st in State, Computer Problem Solving (2021) · 2nd in State, Computer Applications (2021) · 2nd in State, Desktop Publishing (2019) · 4th in State, Keyboarding Applications II (2019)",
+    "Finance & Investment Club — Founder (2019 – 2022)",
+    "AI FinTech Club — Founder (2024 – 2025)"
+  ],
+  "skills": [
+    "Python",
+    "Java",
+    "Swift",
+    "TypeScript",
+    "JavaScript",
+    "C++",
+    "Rust",
+    "React",
+    "Node.js",
+    "REST APIs",
+    "Git",
+    "AI/ML",
+    "RLHF",
+    "iOS",
+    "Healthcare Tech",
+    "Full-Stack"
+  ],
+  "documents": [
+    {
+      "title": "Resume",
+      "items": [
+        {
+          "label": "Resume (PDF)",
+          "path": "/documents/resume.pdf"
+        }
+      ]
+    },
+    {
+      "title": "Academic awards",
+      "items": [
+        {
+          "label": "President's List — Spring 2025",
+          "path": "/documents/Spring2025PresidentsList.pdf"
+        },
+        {
+          "label": "President's List — Fall 2024",
+          "path": "/documents/Fall2024PresidentsList.pdf"
+        },
+        {
+          "label": "Dean's List — Summer 2024",
+          "path": "/documents/Summer2024DeansList.pdf"
+        },
+        {
+          "label": "Dean's List — Spring 2024",
+          "path": "/documents/Spring2024DeansList.pdf"
+        },
+        {
+          "label": "AP Capstone Diploma, AP Scholar with Distinction",
+          "path": "/documents/APCapstoneDiploma.pdf"
+        }
+      ]
+    },
+    {
+      "title": "Certifications",
+      "items": [
+        {
+          "label": "Generative AI Engineering with Databricks",
+          "path": null
+        },
+        {
+          "label": "Spring Boot 2.0 Essential Training",
+          "path": "/documents/spring-boot-certificate.pdf"
+        },
+        {
+          "label": "Practical Database Design & SQL Querying",
+          "path": "/documents/database-design-certificate.pdf"
+        },
+        {
+          "label": "PowerPoint 2016: Presentation Design & Delivery",
+          "path": "/documents/powerpoint-certificate.pdf"
+        },
+        {
+          "label": "Word 2016: Document Creation & Collaboration",
+          "path": "/documents/word-certificate.pdf"
+        },
+        {
+          "label": "Excel 2016: Data Analysis & Presentation",
+          "path": "/documents/excel-certificate.pdf"
+        },
+        {
+          "label": "HIPAA Business Associate",
+          "path": "/documents/hipaa-certificate.pdf"
+        },
+        {
+          "label": "Research Skills Certificate",
+          "path": "/documents/research-skills-certification.pdf"
+        },
+        {
+          "label": "Student Health Clinic — Health Privacy",
+          "path": "/documents/health-privacy-certificate.pdf"
+        },
+        {
+          "label": "Biosafety Certificate",
+          "path": "/documents/biosafety-certificate.pdf"
+        }
+      ]
+    },
+    {
+      "title": "Recommendations",
+      "items": [
+        {
+          "label": "Dr. Murray Patterson — Algorithms (GSU)",
+          "path": "/documents/algorithms-recommendation.pdf"
+        },
+        {
+          "label": "Dr. Roya Hosseini — Operating Systems (GSU)",
+          "path": "/documents/os-recommendation.pdf"
+        },
+        {
+          "label": "Laura Wilson — Principal, South Forsyth High School",
+          "path": "/documents/principal-recommendation.pdf"
+        }
+      ]
+    }
+  ],
+  "repositorySnapshot": {
+    "asOf": "2026-09-05",
+    "names": [
+      "federated-ehr-privacy",
+      "data-structures-labs",
+      "backtesting-engine",
+      "state-conditioned-cgm-risk-evaluation",
+      "astar-puzzle-solver",
+      "product-data-delivery-pipeline",
+      "bb84-qkd-dsl",
+      "drug-interaction-swiftui",
+      "rishabh-portfolio",
+      "trading-bot",
+      "cgm-risk-prediction",
+      "convert",
+      "agent-context-layer",
+      "claude-workflow-safety-evals",
+      "kinmap",
+      "pydantic-ai"
+    ]
+  },
+  "legacyHashes": {
+    "experience": "/work/#experience",
+    "projects": "/work/#projects",
+    "music": "/life/#music",
+    "education": "/about/#education",
+    "honors": "/about/#honors",
+    "skills": "/about/#skills",
+    "documents": "/archive/#documents"
+  },
+  "assets": {
+    "public/documents/APCapstoneDiploma.pdf": "a4c048f63a397e1c10a0a1c153a0aa0fb005f66f",
+    "public/documents/Fall2024PresidentsList.pdf": "d0ad958c5716c948fb866c91630f94adff76be21",
+    "public/documents/README.txt": "7375e6090f177590a3130e662977eae5f5cab709",
+    "public/documents/Spring2024DeansList.pdf": "99326c4cdf1880ed037e2294a3303ec656cba6ff",
+    "public/documents/Spring2025PresidentsList.pdf": "4bbb9a1b9cdbff180d60344adfe3ef9fbf00b427",
+    "public/documents/Summer2024DeansList.pdf": "242a17856cd4fd6583c88cbd4493d8a8f1162723",
+    "public/documents/algorithms-recommendation.pdf": "c156a0b631cf8ff267257642debfd436c60d7a25",
+    "public/documents/biosafety-certificate.pdf": "6f4f1fd7a28662cb819edbe3b66446e51c3bb5ce",
+    "public/documents/database-design-certificate.pdf": "df86a7d0cbb2e0fad217edaec67a1f2ad7bc8de6",
+    "public/documents/excel-certificate.pdf": "c589a9aa13c840f4172c6608629800241f39cd65",
+    "public/documents/health-privacy-certificate.pdf": "4d9ffc4006638c3989bb3c017f8334f27539bcaa",
+    "public/documents/hipaa-certificate.pdf": "d6d1cfbe3c15693bf32452b04ac0b2883d4f4ea8",
+    "public/documents/os-recommendation.pdf": "ce854d6aa18c59b2e4957abf6a13d69347f158ab",
+    "public/documents/powerpoint-certificate.pdf": "a660b0c6a4362400f50f09c9751e5f13ece8513a",
+    "public/documents/principal-recommendation.pdf": "c2f6c82397c4efc9dc5d3fb5962fac1a6fc08b08",
+    "public/documents/research-skills-certification.pdf": "f1ce03fd1344fd9945d4af533f15c394498e1ac1",
+    "public/documents/resume.pdf": "fc2f30d500b18d4e57e938ae99db128b76bcb254",
+    "public/documents/spring-boot-certificate.pdf": "ce4d883325f165b3ddb68b1487c2f8b98a1876c7",
+    "public/documents/word-certificate.pdf": "e163c7f88fa329bfdea53b4dd2c0dfdf4bd2dc74",
+    "public/favicon.svg": "f20f708f670cb1cb3cf3d78159219fd538230933",
+    "src/content/README.md": "70af919869b0737b02f979e9389359a995cd78d1",
+    "src/content/music/AP.mp3": "892708484c1bfe017cd76c41681ac6c2cf582e4b",
+    "src/content/music/ATL.mp3": "41d76ac1ce50d9f95a44fe85581b2db26c48bc1d",
+    "src/content/music/Curvin.mp3": "24f243fbafded5e03fd815ca308f7784c543dd06",
+    "src/content/music/DA.mp3": "0fb78e8409a195d1402250e9d47b243d759f0033",
+    "src/content/music/FYM.mp3": "cf1cf5b5fc4a7464a75e408f5a81a65a19e74d6e",
+    "src/content/music/Just Fall.mp3": "4cdb200bd9860b0ed14a41fb4a3cddb24d0ef410",
+    "src/content/music/Unlock It.mp3": "6afaf37735f54474f406b953afa6e60afc9d6d69",
+    "src/content/photos/IMG_0947.JPG": "d62b9bfe5b323432a71ba1ded8e7b575f7b74696",
+    "src/content/photos/IMG_1444.HEIC": "3f0ddbb76d290325b121162b63b0e40f1b887f41",
+    "src/content/photos/IMG_1628.HEIC": "e9e28ea7149bd4bdb521279ef1fe686e30672748",
+    "src/content/photos/IMG_1866_Original.jpg": "229d2a35123848a42b728ca34f19e0c8631eae92",
+    "src/content/photos/IMG_2492.HEIC": "b7d000d3e668653510f3349b818753a858885158",
+    "src/content/photos/IMG_2760.HEIC": "6df8becd90bf24d8ecd1ca0d294fdadb373dbd9b",
+    "src/content/photos/IMG_3139.HEIC": "1c13feace478258c122a79b12272584aeb6701f3",
+    "src/content/photos/IMG_3139.jpg": "49573ffcdaa48083e548e698fb32d0eb4d7ffbb3",
+    "src/content/photos/IMG_3509.HEIC": "974d76408e1d169c6ea05ae9ced383eba754ff3f",
+    "src/content/photos/IMG_3509.jpg": "617977e44c92b6123a7d018d5fde225ca75a5e64",
+    "src/content/photos/IMG_3675.HEIC": "eee62df16d3d5f44cd534285d0a3a5f6ec088cc5",
+    "src/content/photos/IMG_3683.HEIC": "27dfccac4b7aad26ca6365d668bae7d2e424ed2d",
+    "src/content/photos/IMG_3727.HEIC": "396d9575db1164800310335e9c892f0b23d8dd08",
+    "src/content/photos/IMG_3733.HEIC": "2942f6581467f020498e84080948c05543ee3da7",
+    "src/content/photos/IMG_3733.jpg": "2a3b0574377b3479ee592b85daedaa8f19acc835",
+    "src/content/photos/IMG_3928.HEIC": "df97e9630cb17cfc6e4b2f4e8c293eac24d8854c",
+    "src/content/photos/IMG_3928.jpg": "5fa6a391b2a52b122ffa837a6a071e53adc3c063",
+    "src/content/photos/IMG_3934.HEIC": "9dbd1c6da7cfed1fa45e2d4398d5ce5d676bac72",
+    "src/content/photos/IMG_3934.jpg": "068bd4af726791c1a729cd24cd1fec69045947b6",
+    "src/content/photos/IMG_3955.PNG": "a015518e33a0cf683a1f4e78b3cebf4516adf4ab",
+    "src/content/photos/IMG_3969.HEIC": "2a4dfdf29f57b504a861e587c3393a6edc19a3f3",
+    "src/content/photos/IMG_3969.jpg": "69f692e956ff7e4e4ce8967f4f40f3e0d64ef70a",
+    "src/content/photos/IMG_3971.HEIC": "4c2e1602a427d0a1899b635a93c724122a33eb35",
+    "src/content/photos/IMG_3971.jpg": "0bd7dafd4951b21860d4df55a8733dcf9dc35479",
+    "src/content/photos/IMG_4162.HEIC": "24268975e45b32637e028a58cc0589582827c476",
+    "src/content/photos/IMG_4162.jpg": "1ab1a6cf3a1f625a2d1140e7ef88f2eba4e77e8f",
+    "src/content/photos/IMG_4168.HEIC": "93b06104e83d32d45f530baba300ea87571573ae",
+    "src/content/photos/IMG_4177.HEIC": "638ec80344fa1a34c3c9b2bcba66f2f8ca589049",
+    "src/content/photos/IMG_4177.jpg": "4b756821a4df670261a23b98ca06f17c1f1e16f7",
+    "src/content/photos/IMG_7437.HEIC": "2c996540768651a9bc0df8afa2424f3982cea53f",
+    "src/content/photos/IMG_7437.jpg": "21436e5441600cb023f501764761ef06520a498c",
+    "src/content/portrait.jpg": "705a35645278fdcc1a2f0ef52515075d55b38a44"
+  }
+}

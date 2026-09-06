@@ -28,6 +28,7 @@ Open http://127.0.0.1:4173. `npm run dev` rebuilds and starts the same preview s
 - `src/content/photos/`: all original photos, including uppercase extensions and HEIC variants. The build generates responsive WebP derivatives without EXIF. Originals remain unchanged in Git and are not newly published as raw downloads.
 - `src/content/music/`: original tracks. The build preserves their bytes.
 - `public/documents/`: original PDFs. Their URLs and bytes stay unchanged.
+- `tests/fixtures/merged-content.json`: substantive content and original asset Git hashes from merged commit `7122cf0`. Tests independently protect these facts and assets.
 - `site/baseline.json`: the preservation baseline. Do not edit it just to silence a failed preservation check. When adding content, update the inventory and tests deliberately.
 
 There are no browser GitHub API calls, frontend credentials, analytics services, or third-party font requests. The repository shelf is a dated public snapshot with a link to the current GitHub index, not a live or complete feed.
@@ -44,7 +45,7 @@ python3 -m playwright install chromium
 npm run test:browser
 ```
 
-The browser suite starts its own preview server and captures actual screenshots at 320, 360, 390, 768, 1024, and 1440 pixels. Set `CHROMIUM_EXECUTABLE` to use an existing Chromium executable. To enable axe-core, install `axe-core@4.10.3` into a separate test-tools directory and set `AXE_SOURCE` to its `axe.min.js`. A missing engine is a reported skip, not a pass.
+The browser suite starts its own preview server and captures actual screenshots at 320, 360, 390, 768, 1024, and 1440 pixels. When a preview is already running, set `PORTFOLIO_TEST_ORIGIN=http://127.0.0.1:4173` to reuse it. Set `CHROMIUM_EXECUTABLE` to use an existing Chromium executable. To enable axe-core, install `axe-core@4.10.3` into a separate test-tools directory and set `AXE_SOURCE` to its `axe.min.js`. A missing engine is a reported skip, not a pass.
 
 GitHub Actions builds the real repository assets, runs the tests, and uploads available reports as `portfolio-quality`. A green automated run does not replace visual review, screen-reader testing, or Core Web Vitals field data.
 
@@ -56,4 +57,4 @@ Netlify builds `dist/` using the committed configuration. Keep the production br
 
 This redesign deliberately replaces the old client-only React/Vite shell with a native Node static renderer and a small progressive-enhancement module. The benefit is meaningful HTML on every route without a client framework or hydration. Tradeoffs include string templates, rebuild-and-refresh development, and Python media tooling. Review `docs/ARCHITECTURE.md` before merging.
 
-See `docs/AUDIT.md`, `docs/CONTENT_INVENTORY.md`, `docs/DESIGN_SYSTEM.md`, and `docs/QA.md` for implementation decisions and verification limits.
+See `docs/SIMPLIFICATION_REVIEW.md` for the current merged-site audit and review scope, and `docs/AUDIT.md`, `docs/CONTENT_INVENTORY.md`, `docs/DESIGN_SYSTEM.md`, and `docs/QA.md` for implementation decisions and verification limits.

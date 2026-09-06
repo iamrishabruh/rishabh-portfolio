@@ -9,10 +9,10 @@ import subprocess
 import time
 import unittest
 import urllib.request
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
-ORIGIN = 'http://127.0.0.1:4173'
+ORIGIN = os.environ.get('PORTFOLIO_TEST_ORIGIN', 'http://127.0.0.1:4173')
 REPORT = ROOT / 'qa-output'
 ROUTES = ['/', '/work/', '/research/', '/life/', '/about/', '/archive/', '/work/kept/', '/work/care-access/', '/work/diatrend/', '/work/nexus-lite/', '/work/bennington/', '/work/differential-learning/', '/work/drug-interaction-checker/']
 
@@ -21,7 +21,7 @@ class PortfolioTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         REPORT.mkdir(exist_ok=True)
-        cls.server = subprocess.Popen(['node', 'scripts/serve.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
+        cls.server = None if os.environ.get('PORTFOLIO_TEST_ORIGIN') else subprocess.Popen(['node', 'scripts/serve.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
         ready = False
         for _ in range(50):
             try:
@@ -31,7 +31,8 @@ class PortfolioTests(unittest.TestCase):
             except OSError:
                 time.sleep(.1)
         if not ready:
-            cls.server.terminate()
+            if cls.server:
+                cls.server.terminate()
             raise RuntimeError('Production preview server did not start.')
         cls.playwright = sync_playwright().start()
         executable = os.environ.get('CHROMIUM_EXECUTABLE') or shutil.which('chromium')
@@ -41,8 +42,9 @@ class PortfolioTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.browser.close()
         cls.playwright.stop()
-        cls.server.terminate()
-        cls.server.wait(timeout=5)
+        if cls.server:
+            cls.server.terminate()
+            cls.server.wait(timeout=5)
 
     def setUp(self):
         self.context = self.browser.new_context(viewport={'width': 1440, 'height': 1000}, reduced_motion='reduce')
@@ -94,6 +96,8 @@ class PortfolioTests(unittest.TestCase):
                 (REPORT / 'responsive.json').write_text(json.dumps(results, indent=2))
                 self.assertFalse(overflow, f'{route} overflows at {width}')
                 self.assertEqual(self.page.locator('h1').count(), 1)
+                if width in [390, 1440] and route != '/':
+                    self.page.screenshot(path=str(REPORT / f"{route.strip('/').replace('/', '-')}-{width}.png"))
             self.page.goto(ORIGIN, wait_until='load')
             self.load_visible_images()
             self.page.screenshot(path=str(REPORT / f'home-{width}.png'), full_page=True)
@@ -135,10 +139,10 @@ class PortfolioTests(unittest.TestCase):
         self.context.grant_permissions(['clipboard-read', 'clipboard-write'])
         self.page.goto(ORIGIN)
         self.page.locator('.copy-email').click()
-        self.page.wait_for_function("document.querySelector('.copy-status').textContent==='Email copied.'")
+        expect(self.page.locator(".copy-status")).to_have_text("Email copied.")
         self.page.evaluate("Object.defineProperty(navigator,'clipboard',{value:{writeText:()=>Promise.reject(new Error('Denied'))},configurable:true})")
         self.page.locator('.copy-email').click()
-        self.page.wait_for_function("document.querySelector('.copy-status').textContent.includes('Copy unavailable')")
+        expect(self.page.locator(".copy-status")).to_contain_text("Copy unavailable")
 
     def test_06_legacy_hashes_and_404(self):
         self.page.goto(ORIGIN + '/#documents')
@@ -194,6 +198,50 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(len(loaded), expected)
         (REPORT / 'gallery-media.json').write_text(json.dumps(loaded, indent=2))
         self.assertEqual(self.errors, [])
+
+
+    def test_12_navigation_and_section_links(self):
+        expected = ['/work/', '/research/', '/life/', '/about/', '/archive/']
+        for width, selector in [(1440, '.desktop-nav'), (390, '.mobile-menu nav')]:
+            self.page.set_viewport_size({'width': width, 'height': 844})
+            self.page.goto(ORIGIN + '/work/diatrend/')
+            if width == 390:
+                self.page.locator('.mobile-menu summary').click()
+            self.assertEqual(self.page.locator(selector + ' a').evaluate_all('(links)=>links.map(link=>link.getAttribute("href"))'), expected)
+            self.assertEqual(self.page.locator(selector + ' [aria-current="page"]').inner_text(), 'Work')
+            self.page.locator(selector + ' a').last.click()
+            self.page.wait_for_url('**/archive/')
+            self.assertEqual(self.page.locator('h1').inner_text(), 'Archive')
+        self.page.goto(ORIGIN + '/work/')
+        self.page.get_by_role('navigation', name='Work sections').get_by_role('link', name='Experience', exact=True).click()
+        self.assertTrue(self.page.url.endswith('#experience'))
+        details = self.page.locator('.experience-entry').first.locator('details')
+        details.locator('summary').click()
+        self.assertTrue(details.locator('li').first.is_visible())
+        self.assertIn('Microsoft Graph', details.inner_text())
+
+    def test_13_home_photos_keep_the_reader_on_the_page(self):
+        self.page.goto(ORIGIN)
+        link = self.page.locator('[data-lightbox]').first
+        link.click()
+        self.assertTrue(self.page.locator('dialog').evaluate('(el)=>el.open'))
+        self.assertEqual(self.page.url.rstrip('/'), ORIGIN.rstrip('/'))
+        self.page.get_by_role('button', name='Close photograph', exact=True).click()
+        self.assertTrue(link.evaluate('(el)=>el===document.activeElement'))
+
+    def test_14_text_enlargement_and_short_mobile_menu(self):
+        self.page.set_viewport_size({'width': 768, 'height': 900})
+        for route in ROUTES:
+            self.page.goto(ORIGIN + route)
+            # Simulate a user stylesheet: production CSP stays unchanged.
+            self.page.evaluate("document.documentElement.style.fontSize='200%'")
+            self.assertFalse(self.page.evaluate('document.documentElement.scrollWidth > innerWidth + 1'), route)
+        self.page.set_viewport_size({'width': 568, 'height': 320})
+        self.page.goto(ORIGIN)
+        self.page.locator('.mobile-menu summary').click()
+        self.page.locator('.mobile-menu nav a').last.click()
+        self.page.wait_for_url('**/archive/')
+        self.assertTrue(self.page.locator('h1').is_visible())
 
 
 if __name__ == '__main__':
