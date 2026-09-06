@@ -53,6 +53,35 @@ class PortfolioTests(unittest.TestCase):
     def tearDown(self):
         self.context.close()
 
+    def load_visible_images(self):
+        """Scroll normally to trigger lazy loading; never alter production lazy attributes.
+        Waiting for decode prevents below-fold images appearing blank in full-page captures.
+        """
+        loaded = []
+        for image in self.page.locator('main img[src]').all():
+            if not image.is_visible():
+                continue
+            image.scroll_into_view_if_needed()
+            result = image.evaluate("""async image => {
+                let timeout;
+                try {
+                    await Promise.race([
+                        image.decode(),
+                        new Promise((_, reject) => {
+                            timeout = setTimeout(() => reject(new Error('Image decode timed out: ' + image.currentSrc)), 15000);
+                        })
+                    ]);
+                    return {src: image.currentSrc, width: image.naturalWidth, height: image.naturalHeight};
+                } finally {
+                    clearTimeout(timeout);
+                }
+            }""")
+            self.assertGreater(result['width'], 0, result['src'])
+            self.assertGreater(result['height'], 0, result['src'])
+            loaded.append(result)
+        self.page.evaluate("window.scrollTo({top: 0, left: 0, behavior: 'instant'})")
+        return loaded
+
     def test_01_all_routes_reflow_at_six_sizes(self):
         results = []
         for width in [320, 360, 390, 768, 1024, 1440]:
@@ -66,6 +95,7 @@ class PortfolioTests(unittest.TestCase):
                 self.assertFalse(overflow, f'{route} overflows at {width}')
                 self.assertEqual(self.page.locator('h1').count(), 1)
             self.page.goto(ORIGIN, wait_until='load')
+            self.load_visible_images()
             self.page.screenshot(path=str(REPORT / f'home-{width}.png'), full_page=True)
         self.assertEqual(self.errors, [])
 
@@ -156,6 +186,14 @@ class PortfolioTests(unittest.TestCase):
             (REPORT / 'axe.json').write_text(json.dumps(report, indent=2))
             self.assertEqual(result['violations'], [], route)
         context.close()
+
+    def test_11_all_gallery_images_decode(self):
+        self.page.goto(ORIGIN + '/life/', wait_until='load')
+        loaded = self.load_visible_images()
+        expected = len(json.loads((ROOT / '.generated' / 'media.json').read_text())['photos'])
+        self.assertEqual(len(loaded), expected)
+        (REPORT / 'gallery-media.json').write_text(json.dumps(loaded, indent=2))
+        self.assertEqual(self.errors, [])
 
 
 if __name__ == '__main__':
