@@ -1,6 +1,9 @@
 [build]
-  command = "npm run build"
+  command = "python3 -m pip install -r requirements.txt && npm run lint && npm run build && npm test"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "22"
+
+# Every route is a real static HTML file. Do not add an SPA /* -> /index.html rewrite.
+# Deploy previews are marked noindex by the build script. main remains the production branch.
